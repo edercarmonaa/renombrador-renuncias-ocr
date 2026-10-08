@@ -686,7 +686,20 @@ def nombre_pdf_destino(valor_columna_f: str) -> str:
 
 def encontrar_excel(carpeta: Path, excel_arg: str | None) -> Path:
     if excel_arg:
-        return Path(excel_arg)
+        excel_path = Path(excel_arg)
+        if not excel_path.exists():
+            raise FileNotFoundError(
+                f"No encontre el Excel indicado: {excel_path}. "
+                "Revisa la ruta o usa --excel con un archivo .xlsx existente."
+            )
+        if not excel_path.is_file():
+            raise ValueError(f"La ruta indicada en --excel no es un archivo: {excel_path}")
+        return excel_path
+
+    if not carpeta.exists():
+        raise FileNotFoundError(f"No encontre la carpeta indicada: {carpeta}")
+    if not carpeta.is_dir():
+        raise ValueError(f"La ruta indicada como carpeta no es una carpeta: {carpeta}")
 
     excels = sorted(
         path for path in carpeta.glob("*.xlsx")
@@ -813,10 +826,18 @@ def main() -> None:
         sys.exit(1)
 
     carpeta = Path(args.carpeta)
-    excel_path = encontrar_excel(carpeta, args.excel)
+    try:
+        excel_path = encontrar_excel(carpeta, args.excel)
+    except (FileNotFoundError, ValueError) as e:
+        logger.error("%s", e)
+        sys.exit(1)
     reporte_path = Path(args.reporte)
 
-    filas_excel = cargar_excel(excel_path)
+    try:
+        filas_excel = cargar_excel(excel_path)
+    except Exception as e:  # noqa: BLE001 - se muestra como error de entrada
+        logger.error("No pude leer el Excel '%s': %s", excel_path, e)
+        sys.exit(1)
     pdfs = sorted(carpeta.glob("*.pdf"))
     if not pdfs:
         logger.warning("No se encontraron PDFs en '%s'.", carpeta)

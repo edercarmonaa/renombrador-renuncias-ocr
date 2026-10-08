@@ -50,6 +50,14 @@ Los reportes generados se excluyen del repositorio por defecto.
 
 ## Uso
 
+Reemplaza `/ruta/a/carpeta` y `/ruta/a/archivo.xlsx` por tus rutas reales.
+
+Si los PDF y el Excel estan en la carpeta actual:
+
+```bash
+python3 renombrar_renuncias.py . --excel "archivo_control.xlsx" --dry-run
+```
+
 Simular el proceso sin renombrar archivos:
 
 ```bash
