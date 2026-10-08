@@ -1,0 +1,64 @@
+# Entorno local
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+env/
+ENV/
+
+# Reportes y salidas generadas
+reporte_renombrado_renuncias*.xlsx
+hechos/
+salida/
+output/
+logs/
+*.log
+
+# Documentos con datos personales o de trabajo local
+*.pdf
+*.xlsx
+*.xls
+*.csv
+*.zip
+*.rar
+*.7z
+
+# Bases de datos, respaldos y temporales
+*.sqlite
+*.sqlite3
+*.db
+*.sql
+*.dump
+*.bak
+*.backup
+*.old
+*.copy
+tmp/
+temp/
+cache/
+
+# Credenciales y certificados
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account.json
+firebase-adminsdk*.json
+google-services.json
+secrets.json
+auth.json
+secrets.yml
+
+# Sistema operativo / editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
